@@ -33,3 +33,5 @@
 
 .vscode/ipch
 bazel-*
+build/
+.DS_Store

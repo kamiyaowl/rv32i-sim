@@ -8,7 +8,7 @@ run: build
 
 .PHONY: build
 build: 
-	$(BAZEL) build //cpp:main
+	$(BAZEL) build -c dbg //cpp:main --copt='-std=c++17' --copt='-g' --strip=never --spawn_strategy=standalone
 
 .PHONY: cleam
 clean: 

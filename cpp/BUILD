@@ -1,6 +1,6 @@
 cc_binary(
     name = "main",
-    srcs = ["main.cpp"],
+    srcs = glob(["*.cpp"]),
     copts = [],
     deps = [],
 )

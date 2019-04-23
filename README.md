@@ -1,2 +1,2 @@
 # rv32i-sim
-RISV-V Software Simulation
+RISC-V Software Simulation

@@ -3,28 +3,11 @@ services:
   riscv-assembly:
     build: .
     volumes: 
-      - ./:/root
+      - ./:/work
     command: >
       riscv64-unknown-elf-gcc
       -S
-      -march=RV32I
-      -o /root/hello.s
-      /root/hello.c
-
-  riscv-build:
-    build: .
-    volumes: 
-      - ./:/root
-    command: >
-      riscv64-unknown-elf-gcc -v
-    depends_on: 
-      - riscv-assembly
-
-  riscv-run:
-    build: .
-    volumes: 
-      - ./:/root
-    command: >
-      spike pk /root/hello.o
-    depends_on: 
-      - riscv-build
+      -march=rv32i
+      -mabi=ilp32
+      -o /work/hello.s
+      /work/hello.c

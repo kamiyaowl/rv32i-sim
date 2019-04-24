@@ -1,7 +1,5 @@
 cc_binary(
     name = "main",
-    hdrs = glob(["*.h"]),
-    srcs = glob(["*.cpp"]),
+    srcs = glob(["*.cpp", "*.h"]),
     copts = [],
-    deps = [],
 )

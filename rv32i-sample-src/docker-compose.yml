@@ -1,31 +1,30 @@
 version: "3"
 services:
   riscv-assembly:
-    image: sbates130272/riscv
+    build: .
     volumes: 
-      - ./:/host_src
+      - ./:/root
     command: >
       riscv64-unknown-elf-gcc
       -S
-      -o /host_src/hello.s
-      /host_src/hello.c
+      -march=RV32I
+      -o /root/hello.s
+      /root/hello.c
 
   riscv-build:
-    image: sbates130272/riscv
+    build: .
     volumes: 
-      - ./:/host_src
+      - ./:/root
     command: >
-      riscv64-unknown-elf-gcc
-      -o /host_src/hello.o
-      /host_src/hello.c 
+      riscv64-unknown-elf-gcc -v
     depends_on: 
       - riscv-assembly
 
   riscv-run:
-    image: sbates130272/riscv
+    build: .
     volumes: 
-      - ./:/host_src
+      - ./:/root
     command: >
-      spike pk /host_src/hello.o
+      spike pk /root/hello.o
     depends_on: 
       - riscv-build

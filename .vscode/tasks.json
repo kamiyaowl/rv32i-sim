@@ -11,7 +11,7 @@
         {
             "label": "compile clang++",
             "type": "shell",
-            "command": "mkdir -p build && clang++ -g --std=c++17 cpp/main.cpp -o build/main.out",
+            "command": "mkdir -p build && clang++ -g --std=c++17 src/main.cpp -o build/main.out",
             "problemMatcher": []
         }
     ]

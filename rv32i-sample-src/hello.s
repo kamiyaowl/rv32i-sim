@@ -5,52 +5,52 @@
 	.type	main, @function
 main:
 	add	sp,sp,-16
-	sd	ra,8(sp)
-	sd	s0,0(sp)
+	sw	ra,12(sp)
+	sw	s0,8(sp)
 	add	s0,sp,16
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a4,12(a5)
-	addw	a4,a4,-1
-	sw	a4,12(a5)
-	lw	a5,12(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,8(a5)
+	add	a4,a4,-1
+	sw	a4,8(a5)
+	lw	a5,8(a5)
 	bgez	a5,.L2
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a4,12(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,8(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a5,40(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,24(a5)
 	blt	a4,a5,.L3
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	li	a4,72
 	sb	a4,0(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	lbu	a4,0(a5)
 	li	a5,10
 	beq	a4,a5,.L4
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a4,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,0(a5)
 	add	a4,a4,1
-	sd	a4,0(a5)
+	sw	a4,0(a5)
 	j	.L7
 .L4:
 	lui	a5,%hi(_impure_ptr)
-	ld	a4,%lo(_impure_ptr)(a5)
+	lw	a4,%lo(_impure_ptr)(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
 	mv	a2,a5
 	li	a1,10
 	mv	a0,a4
@@ -58,10 +58,10 @@ main:
 	j	.L7
 .L3:
 	lui	a5,%hi(_impure_ptr)
-	ld	a4,%lo(_impure_ptr)(a5)
+	lw	a4,%lo(_impure_ptr)(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
 	mv	a2,a5
 	li	a1,72
 	mv	a0,a4
@@ -69,61 +69,61 @@ main:
 	j	.L7
 .L2:
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	li	a4,72
 	sb	a4,0(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a4,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,0(a5)
 	add	a4,a4,1
-	sd	a4,0(a5)
+	sw	a4,0(a5)
 .L7:
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a4,12(a5)
-	addw	a4,a4,-1
-	sw	a4,12(a5)
-	lw	a5,12(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,8(a5)
+	add	a4,a4,-1
+	sw	a4,8(a5)
+	lw	a5,8(a5)
 	bgez	a5,.L8
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a4,12(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,8(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a5,40(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,24(a5)
 	blt	a4,a5,.L9
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	li	a4,101
 	sb	a4,0(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	lbu	a4,0(a5)
 	li	a5,10
 	beq	a4,a5,.L10
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a4,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,0(a5)
 	add	a4,a4,1
-	sd	a4,0(a5)
+	sw	a4,0(a5)
 	j	.L13
 .L10:
 	lui	a5,%hi(_impure_ptr)
-	ld	a4,%lo(_impure_ptr)(a5)
+	lw	a4,%lo(_impure_ptr)(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
 	mv	a2,a5
 	li	a1,10
 	mv	a0,a4
@@ -131,10 +131,10 @@ main:
 	j	.L13
 .L9:
 	lui	a5,%hi(_impure_ptr)
-	ld	a4,%lo(_impure_ptr)(a5)
+	lw	a4,%lo(_impure_ptr)(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
 	mv	a2,a5
 	li	a1,101
 	mv	a0,a4
@@ -142,61 +142,61 @@ main:
 	j	.L13
 .L8:
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	li	a4,101
 	sb	a4,0(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a4,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,0(a5)
 	add	a4,a4,1
-	sd	a4,0(a5)
+	sw	a4,0(a5)
 .L13:
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a4,12(a5)
-	addw	a4,a4,-1
-	sw	a4,12(a5)
-	lw	a5,12(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,8(a5)
+	add	a4,a4,-1
+	sw	a4,8(a5)
+	lw	a5,8(a5)
 	bgez	a5,.L14
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a4,12(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,8(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a5,40(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,24(a5)
 	blt	a4,a5,.L15
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	li	a4,108
 	sb	a4,0(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	lbu	a4,0(a5)
 	li	a5,10
 	beq	a4,a5,.L16
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a4,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,0(a5)
 	add	a4,a4,1
-	sd	a4,0(a5)
+	sw	a4,0(a5)
 	j	.L19
 .L16:
 	lui	a5,%hi(_impure_ptr)
-	ld	a4,%lo(_impure_ptr)(a5)
+	lw	a4,%lo(_impure_ptr)(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
 	mv	a2,a5
 	li	a1,10
 	mv	a0,a4
@@ -204,10 +204,10 @@ main:
 	j	.L19
 .L15:
 	lui	a5,%hi(_impure_ptr)
-	ld	a4,%lo(_impure_ptr)(a5)
+	lw	a4,%lo(_impure_ptr)(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
 	mv	a2,a5
 	li	a1,108
 	mv	a0,a4
@@ -215,61 +215,61 @@ main:
 	j	.L19
 .L14:
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	li	a4,108
 	sb	a4,0(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a4,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,0(a5)
 	add	a4,a4,1
-	sd	a4,0(a5)
+	sw	a4,0(a5)
 .L19:
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a4,12(a5)
-	addw	a4,a4,-1
-	sw	a4,12(a5)
-	lw	a5,12(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,8(a5)
+	add	a4,a4,-1
+	sw	a4,8(a5)
+	lw	a5,8(a5)
 	bgez	a5,.L20
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a4,12(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,8(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a5,40(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,24(a5)
 	blt	a4,a5,.L21
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	li	a4,108
 	sb	a4,0(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	lbu	a4,0(a5)
 	li	a5,10
 	beq	a4,a5,.L22
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a4,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,0(a5)
 	add	a4,a4,1
-	sd	a4,0(a5)
+	sw	a4,0(a5)
 	j	.L25
 .L22:
 	lui	a5,%hi(_impure_ptr)
-	ld	a4,%lo(_impure_ptr)(a5)
+	lw	a4,%lo(_impure_ptr)(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
 	mv	a2,a5
 	li	a1,10
 	mv	a0,a4
@@ -277,10 +277,10 @@ main:
 	j	.L25
 .L21:
 	lui	a5,%hi(_impure_ptr)
-	ld	a4,%lo(_impure_ptr)(a5)
+	lw	a4,%lo(_impure_ptr)(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
 	mv	a2,a5
 	li	a1,108
 	mv	a0,a4
@@ -288,61 +288,61 @@ main:
 	j	.L25
 .L20:
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	li	a4,108
 	sb	a4,0(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a4,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,0(a5)
 	add	a4,a4,1
-	sd	a4,0(a5)
+	sw	a4,0(a5)
 .L25:
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a4,12(a5)
-	addw	a4,a4,-1
-	sw	a4,12(a5)
-	lw	a5,12(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,8(a5)
+	add	a4,a4,-1
+	sw	a4,8(a5)
+	lw	a5,8(a5)
 	bgez	a5,.L26
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a4,12(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,8(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a5,40(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,24(a5)
 	blt	a4,a5,.L27
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	li	a4,111
 	sb	a4,0(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	lbu	a4,0(a5)
 	li	a5,10
 	beq	a4,a5,.L28
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a4,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,0(a5)
 	add	a4,a4,1
-	sd	a4,0(a5)
+	sw	a4,0(a5)
 	j	.L31
 .L28:
 	lui	a5,%hi(_impure_ptr)
-	ld	a4,%lo(_impure_ptr)(a5)
+	lw	a4,%lo(_impure_ptr)(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
 	mv	a2,a5
 	li	a1,10
 	mv	a0,a4
@@ -350,10 +350,10 @@ main:
 	j	.L31
 .L27:
 	lui	a5,%hi(_impure_ptr)
-	ld	a4,%lo(_impure_ptr)(a5)
+	lw	a4,%lo(_impure_ptr)(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
 	mv	a2,a5
 	li	a1,111
 	mv	a0,a4
@@ -361,61 +361,61 @@ main:
 	j	.L31
 .L26:
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	li	a4,111
 	sb	a4,0(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a4,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,0(a5)
 	add	a4,a4,1
-	sd	a4,0(a5)
+	sw	a4,0(a5)
 .L31:
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a4,12(a5)
-	addw	a4,a4,-1
-	sw	a4,12(a5)
-	lw	a5,12(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,8(a5)
+	add	a4,a4,-1
+	sw	a4,8(a5)
+	lw	a5,8(a5)
 	bgez	a5,.L32
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a4,12(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,8(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a5,40(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,24(a5)
 	blt	a4,a5,.L33
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	li	a4,32
 	sb	a4,0(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	lbu	a4,0(a5)
 	li	a5,10
 	beq	a4,a5,.L34
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a4,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,0(a5)
 	add	a4,a4,1
-	sd	a4,0(a5)
+	sw	a4,0(a5)
 	j	.L37
 .L34:
 	lui	a5,%hi(_impure_ptr)
-	ld	a4,%lo(_impure_ptr)(a5)
+	lw	a4,%lo(_impure_ptr)(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
 	mv	a2,a5
 	li	a1,10
 	mv	a0,a4
@@ -423,10 +423,10 @@ main:
 	j	.L37
 .L33:
 	lui	a5,%hi(_impure_ptr)
-	ld	a4,%lo(_impure_ptr)(a5)
+	lw	a4,%lo(_impure_ptr)(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
 	mv	a2,a5
 	li	a1,32
 	mv	a0,a4
@@ -434,61 +434,61 @@ main:
 	j	.L37
 .L32:
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	li	a4,32
 	sb	a4,0(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a4,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,0(a5)
 	add	a4,a4,1
-	sd	a4,0(a5)
+	sw	a4,0(a5)
 .L37:
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a4,12(a5)
-	addw	a4,a4,-1
-	sw	a4,12(a5)
-	lw	a5,12(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,8(a5)
+	add	a4,a4,-1
+	sw	a4,8(a5)
+	lw	a5,8(a5)
 	bgez	a5,.L38
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a4,12(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,8(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a5,40(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,24(a5)
 	blt	a4,a5,.L39
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	li	a4,87
 	sb	a4,0(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	lbu	a4,0(a5)
 	li	a5,10
 	beq	a4,a5,.L40
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a4,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,0(a5)
 	add	a4,a4,1
-	sd	a4,0(a5)
+	sw	a4,0(a5)
 	j	.L43
 .L40:
 	lui	a5,%hi(_impure_ptr)
-	ld	a4,%lo(_impure_ptr)(a5)
+	lw	a4,%lo(_impure_ptr)(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
 	mv	a2,a5
 	li	a1,10
 	mv	a0,a4
@@ -496,10 +496,10 @@ main:
 	j	.L43
 .L39:
 	lui	a5,%hi(_impure_ptr)
-	ld	a4,%lo(_impure_ptr)(a5)
+	lw	a4,%lo(_impure_ptr)(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
 	mv	a2,a5
 	li	a1,87
 	mv	a0,a4
@@ -507,61 +507,61 @@ main:
 	j	.L43
 .L38:
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	li	a4,87
 	sb	a4,0(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a4,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,0(a5)
 	add	a4,a4,1
-	sd	a4,0(a5)
+	sw	a4,0(a5)
 .L43:
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a4,12(a5)
-	addw	a4,a4,-1
-	sw	a4,12(a5)
-	lw	a5,12(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,8(a5)
+	add	a4,a4,-1
+	sw	a4,8(a5)
+	lw	a5,8(a5)
 	bgez	a5,.L44
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a4,12(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,8(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a5,40(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,24(a5)
 	blt	a4,a5,.L45
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	li	a4,111
 	sb	a4,0(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	lbu	a4,0(a5)
 	li	a5,10
 	beq	a4,a5,.L46
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a4,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,0(a5)
 	add	a4,a4,1
-	sd	a4,0(a5)
+	sw	a4,0(a5)
 	j	.L49
 .L46:
 	lui	a5,%hi(_impure_ptr)
-	ld	a4,%lo(_impure_ptr)(a5)
+	lw	a4,%lo(_impure_ptr)(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
 	mv	a2,a5
 	li	a1,10
 	mv	a0,a4
@@ -569,10 +569,10 @@ main:
 	j	.L49
 .L45:
 	lui	a5,%hi(_impure_ptr)
-	ld	a4,%lo(_impure_ptr)(a5)
+	lw	a4,%lo(_impure_ptr)(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
 	mv	a2,a5
 	li	a1,111
 	mv	a0,a4
@@ -580,61 +580,61 @@ main:
 	j	.L49
 .L44:
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	li	a4,111
 	sb	a4,0(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a4,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,0(a5)
 	add	a4,a4,1
-	sd	a4,0(a5)
+	sw	a4,0(a5)
 .L49:
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a4,12(a5)
-	addw	a4,a4,-1
-	sw	a4,12(a5)
-	lw	a5,12(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,8(a5)
+	add	a4,a4,-1
+	sw	a4,8(a5)
+	lw	a5,8(a5)
 	bgez	a5,.L50
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a4,12(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,8(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a5,40(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,24(a5)
 	blt	a4,a5,.L51
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	li	a4,114
 	sb	a4,0(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	lbu	a4,0(a5)
 	li	a5,10
 	beq	a4,a5,.L52
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a4,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,0(a5)
 	add	a4,a4,1
-	sd	a4,0(a5)
+	sw	a4,0(a5)
 	j	.L55
 .L52:
 	lui	a5,%hi(_impure_ptr)
-	ld	a4,%lo(_impure_ptr)(a5)
+	lw	a4,%lo(_impure_ptr)(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
 	mv	a2,a5
 	li	a1,10
 	mv	a0,a4
@@ -642,10 +642,10 @@ main:
 	j	.L55
 .L51:
 	lui	a5,%hi(_impure_ptr)
-	ld	a4,%lo(_impure_ptr)(a5)
+	lw	a4,%lo(_impure_ptr)(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
 	mv	a2,a5
 	li	a1,114
 	mv	a0,a4
@@ -653,61 +653,61 @@ main:
 	j	.L55
 .L50:
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	li	a4,114
 	sb	a4,0(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a4,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,0(a5)
 	add	a4,a4,1
-	sd	a4,0(a5)
+	sw	a4,0(a5)
 .L55:
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a4,12(a5)
-	addw	a4,a4,-1
-	sw	a4,12(a5)
-	lw	a5,12(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,8(a5)
+	add	a4,a4,-1
+	sw	a4,8(a5)
+	lw	a5,8(a5)
 	bgez	a5,.L56
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a4,12(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,8(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a5,40(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,24(a5)
 	blt	a4,a5,.L57
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	li	a4,108
 	sb	a4,0(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	lbu	a4,0(a5)
 	li	a5,10
 	beq	a4,a5,.L58
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a4,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,0(a5)
 	add	a4,a4,1
-	sd	a4,0(a5)
+	sw	a4,0(a5)
 	j	.L61
 .L58:
 	lui	a5,%hi(_impure_ptr)
-	ld	a4,%lo(_impure_ptr)(a5)
+	lw	a4,%lo(_impure_ptr)(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
 	mv	a2,a5
 	li	a1,10
 	mv	a0,a4
@@ -715,10 +715,10 @@ main:
 	j	.L61
 .L57:
 	lui	a5,%hi(_impure_ptr)
-	ld	a4,%lo(_impure_ptr)(a5)
+	lw	a4,%lo(_impure_ptr)(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
 	mv	a2,a5
 	li	a1,108
 	mv	a0,a4
@@ -726,61 +726,61 @@ main:
 	j	.L61
 .L56:
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	li	a4,108
 	sb	a4,0(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a4,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,0(a5)
 	add	a4,a4,1
-	sd	a4,0(a5)
+	sw	a4,0(a5)
 .L61:
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a4,12(a5)
-	addw	a4,a4,-1
-	sw	a4,12(a5)
-	lw	a5,12(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,8(a5)
+	add	a4,a4,-1
+	sw	a4,8(a5)
+	lw	a5,8(a5)
 	bgez	a5,.L62
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a4,12(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,8(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a5,40(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,24(a5)
 	blt	a4,a5,.L63
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	li	a4,100
 	sb	a4,0(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	lbu	a4,0(a5)
 	li	a5,10
 	beq	a4,a5,.L64
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a4,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,0(a5)
 	add	a4,a4,1
-	sd	a4,0(a5)
+	sw	a4,0(a5)
 	j	.L67
 .L64:
 	lui	a5,%hi(_impure_ptr)
-	ld	a4,%lo(_impure_ptr)(a5)
+	lw	a4,%lo(_impure_ptr)(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
 	mv	a2,a5
 	li	a1,10
 	mv	a0,a4
@@ -788,10 +788,10 @@ main:
 	j	.L67
 .L63:
 	lui	a5,%hi(_impure_ptr)
-	ld	a4,%lo(_impure_ptr)(a5)
+	lw	a4,%lo(_impure_ptr)(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
 	mv	a2,a5
 	li	a1,100
 	mv	a0,a4
@@ -799,61 +799,61 @@ main:
 	j	.L67
 .L62:
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	li	a4,100
 	sb	a4,0(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a4,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,0(a5)
 	add	a4,a4,1
-	sd	a4,0(a5)
+	sw	a4,0(a5)
 .L67:
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a4,12(a5)
-	addw	a4,a4,-1
-	sw	a4,12(a5)
-	lw	a5,12(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,8(a5)
+	add	a4,a4,-1
+	sw	a4,8(a5)
+	lw	a5,8(a5)
 	bgez	a5,.L68
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a4,12(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,8(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a5,40(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,24(a5)
 	blt	a4,a5,.L69
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	li	a4,33
 	sb	a4,0(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	lbu	a4,0(a5)
 	li	a5,10
 	beq	a4,a5,.L70
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a4,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,0(a5)
 	add	a4,a4,1
-	sd	a4,0(a5)
+	sw	a4,0(a5)
 	j	.L73
 .L70:
 	lui	a5,%hi(_impure_ptr)
-	ld	a4,%lo(_impure_ptr)(a5)
+	lw	a4,%lo(_impure_ptr)(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
 	mv	a2,a5
 	li	a1,10
 	mv	a0,a4
@@ -861,10 +861,10 @@ main:
 	j	.L73
 .L69:
 	lui	a5,%hi(_impure_ptr)
-	ld	a4,%lo(_impure_ptr)(a5)
+	lw	a4,%lo(_impure_ptr)(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
 	mv	a2,a5
 	li	a1,33
 	mv	a0,a4
@@ -872,61 +872,61 @@ main:
 	j	.L73
 .L68:
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	li	a4,33
 	sb	a4,0(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a4,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,0(a5)
 	add	a4,a4,1
-	sd	a4,0(a5)
+	sw	a4,0(a5)
 .L73:
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a4,12(a5)
-	addw	a4,a4,-1
-	sw	a4,12(a5)
-	lw	a5,12(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,8(a5)
+	add	a4,a4,-1
+	sw	a4,8(a5)
+	lw	a5,8(a5)
 	bgez	a5,.L74
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a4,12(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,8(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	lw	a5,40(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,24(a5)
 	blt	a4,a5,.L75
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	li	a4,10
 	sb	a4,0(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	lbu	a4,0(a5)
 	li	a5,10
 	beq	a4,a5,.L76
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a4,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,0(a5)
 	add	a4,a4,1
-	sd	a4,0(a5)
+	sw	a4,0(a5)
 	j	.L79
 .L76:
 	lui	a5,%hi(_impure_ptr)
-	ld	a4,%lo(_impure_ptr)(a5)
+	lw	a4,%lo(_impure_ptr)(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
 	mv	a2,a5
 	li	a1,10
 	mv	a0,a4
@@ -934,10 +934,10 @@ main:
 	j	.L79
 .L75:
 	lui	a5,%hi(_impure_ptr)
-	ld	a4,%lo(_impure_ptr)(a5)
+	lw	a4,%lo(_impure_ptr)(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
 	mv	a2,a5
 	li	a1,10
 	mv	a0,a4
@@ -945,22 +945,22 @@ main:
 	j	.L79
 .L74:
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a5,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a5,0(a5)
 	li	a4,10
 	sb	a4,0(a5)
 	lui	a5,%hi(_impure_ptr)
-	ld	a5,%lo(_impure_ptr)(a5)
-	ld	a5,16(a5)
-	ld	a4,0(a5)
+	lw	a5,%lo(_impure_ptr)(a5)
+	lw	a5,8(a5)
+	lw	a4,0(a5)
 	add	a4,a4,1
-	sd	a4,0(a5)
+	sw	a4,0(a5)
 .L79:
 	li	a5,0
 	mv	a0,a5
-	ld	ra,8(sp)
-	ld	s0,0(sp)
+	lw	ra,12(sp)
+	lw	s0,8(sp)
 	add	sp,sp,16
 	jr	ra
 	.size	main, .-main

@@ -22,7 +22,7 @@ namespace sim {
                 assert(addr < XLEN);
 
                 if(addr == 0) return 0x0; // x0/zero
-                else x[addr];
+                else return x[addr];
             }
             tuple<T,T> read(uint8_t addr1, uint8_t addr2) {
                 return make_tuple(this->read(addr1), this->read(addr2));

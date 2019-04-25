@@ -75,19 +75,24 @@ namespace sim {
     class Inst {
         public:
             string name;
-            uint8_t opcode;
+            uint8_t opcode; // opcodeの一致を確認->parseArgsでfunct3,7(命令形式による)を取得→比較
+            uint8_t funct3;
+            uint8_t funct7;
             ImmType immType;
             function<Process<T, XLEN>> process;
 
             Inst() {}
-            Inst(string name, uint8_t opcode, ImmType immType, function<Process<T, XLEN>> process):
-            name(name), opcode(opcode), immType(immType), process(process) {
+            Inst(string name, uint8_t opcode, uint8_t funct3, uint8_t funct7, ImmType immType, function<Process<T, XLEN>> process):
+                name(name), opcode(opcode), funct3(funct3), funct7(funct7), immType(immType), process(process) {
             }
             ~Inst() {}
             void run(Reg<T, XLEN>& reg, T inst) {
                 Args args;
                 parseArgs<T, XLEN>(inst, this->immType, args);
+
                 assert(args.opcode == this->opcode);
+                assert(args.funct3 == this->funct3);
+                assert(args.funct7 == this->funct7);
                 
                 this->process(reg, args);
             }

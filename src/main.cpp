@@ -1,15 +1,14 @@
 #include <iostream>
 #include <stdint.h>
+#include <bitset>
 
 #include "Inst.h"
 #include "Reg.h"
-
-using T = uint32_t;
-const size_t XLEN = 32;
+#include "RV32I.h"
 
 int main(void) {
-    std::cout << "Hello" << std::endl;
-    sim::Inst<T, XLEN> add("add", 0b0110011, sim::ImmType::I, [](sim::Reg<T, XLEN>& reg, const sim::Args args){});
-
+    for(const auto& pair: sim::rv32i::instructions) {
+        std::cout << std::bitset<7>(pair.first) << ": [" << pair.second.name << "]" << std::endl;
+    }
     return 0;
 }

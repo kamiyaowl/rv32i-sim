@@ -1,24 +1,25 @@
 #include <vector>
 #include <tuple>
 #include <string>
+#pragma once
+
 #include <stdint.h>
 
 using namespace std;
 
 namespace sim {
-    template<typename T> // uint16_t/uint32_t/uint64_t ...
+    template<typename T, size_t XLEN>
     class Reg {
         protected:
-            const size_t REG_N = 32;
             vector<T> x;
             T pc;
         public:
             Reg() {
-                x = vector(REG_N);
+                x = vector<T>(XLEN);
                 pc = 0;
             }
             T read(uint8_t addr) {
-                assert(addr < REG_N);
+                assert(addr < XLEN);
 
                 if(addr == 0) return 0x0; // x0/zero
                 else x[addr];
@@ -28,7 +29,7 @@ namespace sim {
             }
             void write(uint8_t addr, T data) {
                 assert(0 < addr);
-                assert(addr < REG_N);
+                assert(addr < XLEN);
                 x[addr] = data;
             }
             T read_pc() {

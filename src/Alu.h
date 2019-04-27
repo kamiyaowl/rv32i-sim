@@ -65,7 +65,7 @@ namespace sim {
         using U = uint32_t;
         const size_t XLEN = 32;
         const vector<Inst<S, XLEN>> alu_32i = {
-            // R-type
+            // OP-Reg
             alu_32i_r_inst<S, XLEN>("add"   , 0b000, 0b0000000, [](S a, S b) { return a + b; }),
             alu_32i_r_inst<S, XLEN>("sub"   , 0b000, 0b0100000, [](S a, S b) { return a - b; }),
             alu_32i_r_inst<S, XLEN>("sll"   , 0b001, 0b0000000, [](S a, S b) { assert(b > -1); return static_cast<U>(a) << b; }),
@@ -76,7 +76,7 @@ namespace sim {
             alu_32i_r_inst<S, XLEN>("sra"   , 0b101, 0b0100000, [](S a, S b) { assert(b > -1); return a >> b; }),
             alu_32i_r_inst<S, XLEN>("or"    , 0b110, 0b0000000, [](S a, S b) { return static_cast<U>(a) | static_cast<U>(b); }),
             alu_32i_r_inst<S, XLEN>("and"   , 0b111, 0b0000000, [](S a, S b) { return static_cast<U>(a) & static_cast<U>(b); }),
-            // I-type
+            // OP-IMM
             alu_32i_i_inst<S, XLEN>("slli"  , 0b001, 0b0000000, [](S a, S imm) { assert((imm & 0xfe0) == 0x000); assert(imm > -1); return static_cast<U>(a) << (imm & 0x1f); }), // shamt==imm[24:20]
             alu_32i_i_inst<S, XLEN>("srli"  , 0b101, 0b0000000, [](S a, S imm) { assert((imm & 0xfe0) == 0x000); assert(imm > -1); return static_cast<U>(a) >> (imm & 0x1f); }), // shamt==imm[24:20]
             alu_32i_i_inst<S, XLEN>("srai"  , 0b101, 0b0100000, [](S a, S imm) { assert((imm & 0xfe0) == 0x400); assert(imm > -1); return a >> (imm & 0x1f); }), // shamt==imm[24:20]
@@ -86,6 +86,12 @@ namespace sim {
             alu_32i_i_inst<S, XLEN>("xori"  , 0b100, 0b0000000, [](S a, S imm) { return a ^ imm; }),
             alu_32i_i_inst<S, XLEN>("ori"   , 0b110, 0b0000000, [](S a, S imm) { return a | imm; }),
             alu_32i_i_inst<S, XLEN>("andi"  , 0b111, 0b0000000, [](S a, S imm) { return a + imm; }),
+            // Store
+            // TODO:
+
+            // Load
+            // TODO:
+
             // Branch
             alu_32i_b_inst<S, XLEN>("beq"   , 0b000, [](S a, S b) { return a == b; }),
             alu_32i_b_inst<S, XLEN>("bne"   , 0b001, [](S a, S b) { return a != b; }),
@@ -93,7 +99,6 @@ namespace sim {
             alu_32i_b_inst<S, XLEN>("bge"   , 0b101, [](S a, S b) { return a >  b; }),
             alu_32i_b_inst<S, XLEN>("bltu"  , 0b110, [](S a, S b) { return static_cast<U>(a) <   static_cast<U>(b); }),
             alu_32i_b_inst<S, XLEN>("bgeu"  , 0b111, [](S a, S b) { return static_cast<U>(a) >=  static_cast<U>(b); }),
-
             // Jump
             Inst<S, XLEN>(
                 "jalr",
@@ -122,7 +127,7 @@ namespace sim {
                     reg.write_pc(dst);
                 }
             ),
-            // Load
+            // Load Immediate->Upper
             Inst<S, XLEN>(
                 "auipc",
                 0b0010111,

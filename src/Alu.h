@@ -64,7 +64,7 @@ namespace sim {
         using S = int32_t;
         using U = uint32_t;
         const size_t XLEN = 32;
-        const vector<Inst<S, XLEN>> alu_32i = {
+        const vector<Inst<S, XLEN>> instructions = {
             // OP-Reg
             alu_32i_r_inst<S, XLEN>("add"   , 0b000, 0b0000000, [](S a, S b) { return a + b; }),
             alu_32i_r_inst<S, XLEN>("sub"   , 0b000, 0b0100000, [](S a, S b) { return a - b; }),
@@ -83,9 +83,9 @@ namespace sim {
             alu_32i_i_inst<S, XLEN>("addi"  , 0b000, 0b0000000, [](S a, S imm) { return a + imm; }),
             alu_32i_i_inst<S, XLEN>("slti"  , 0b010, 0b0000000, [](S a, S imm) { return a < imm ? 0x1 : 0x0; }),
             alu_32i_i_inst<S, XLEN>("sltiu" , 0b011, 0b0000000, [](S a, S imm) { return static_cast<U>(a) < static_cast<U>(imm) ? 0x1 : 0x0; }),
-            alu_32i_i_inst<S, XLEN>("xori"  , 0b100, 0b0000000, [](S a, S imm) { return a ^ imm; }),
-            alu_32i_i_inst<S, XLEN>("ori"   , 0b110, 0b0000000, [](S a, S imm) { return a | imm; }),
-            alu_32i_i_inst<S, XLEN>("andi"  , 0b111, 0b0000000, [](S a, S imm) { return a + imm; }),
+            alu_32i_i_inst<S, XLEN>("xori"  , 0b100, 0b0000000, [](S a, S imm) { return static_cast<U>(a) ^ static_cast<U>(imm); }),
+            alu_32i_i_inst<S, XLEN>("ori"   , 0b110, 0b0000000, [](S a, S imm) { return static_cast<U>(a) | static_cast<U>(imm); }),
+            alu_32i_i_inst<S, XLEN>("andi"  , 0b111, 0b0000000, [](S a, S imm) { return static_cast<U>(a) & static_cast<U>(imm); }),
             // Store
             // TODO:
 

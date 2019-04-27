@@ -115,12 +115,8 @@ namespace sim {
             }
             ~Inst() {}
             void run(Reg<T, XLEN>& reg, T inst) {
-                Args args;
-                parseArgs<T, XLEN>(inst, this->immType, args);
-
-                assert(args.opcode == this->opcode);
-                assert(args.funct3 == this->funct3);
-                assert(args.funct7 == this->funct7);
+                // TODO: Impl
+                assert(false);
                 
                 this->process(reg, args);
             }

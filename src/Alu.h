@@ -23,12 +23,12 @@ namespace sim {
         );
     }
     template<typename T, size_t XLEN>
-    inline Inst<T, XLEN> alu_32i_i_inst(string name, uint8_t funct3, function<T(T,T)> p) {
+    inline Inst<T, XLEN> alu_32i_i_inst(string name, uint8_t funct3, uint8_t funct7, function<T(T,T)> p) {
         return Inst<T, XLEN>(
             name,
             0b0010011,
             funct3,
-            0x0, // invalid
+            funct7, // invalid(srai, srliの見分けるためだけに必要、通常は0x0)
             ImmType::I,
             [&](Reg<T, XLEN>& reg, const Args args) {
                 auto r1 = reg.read(args.rs1);
@@ -66,35 +66,33 @@ namespace sim {
         const size_t XLEN = 32;
         const vector<Inst<S, XLEN>> alu_32i = {
             // R-type
-            alu_32i_r_inst<S, XLEN>("add"  , 0b000, 0b0000000, [](S a, S b) { return a + b; }),
-            alu_32i_r_inst<S, XLEN>("sub"  , 0b000, 0b0100000, [](S a, S b) { return a - b; }),
-            alu_32i_r_inst<S, XLEN>("sll"  , 0b001, 0b0000000, [](S a, S b) { assert(b > -1); return static_cast<U>(a) << b; }),
-            alu_32i_r_inst<S, XLEN>("slt"  , 0b010, 0b0000000, [](S a, S b) { return a < b ? 0x1 : 0x0; }),
-            alu_32i_r_inst<S, XLEN>("sltu" , 0b011, 0b0000000, [](S a, S b) { return static_cast<U>(a) < static_cast<U>(b) ? 0x1 : 0x0; }),
-            alu_32i_r_inst<S, XLEN>("xor"  , 0b100, 0b0000000, [](S a, S b) { return static_cast<U>(a) ^ static_cast<U>(b); }),
-            alu_32i_r_inst<S, XLEN>("srl"  , 0b101, 0b0000000, [](S a, S b) { assert(b > -1); return static_cast<U>(a) >> b; }),
-            alu_32i_r_inst<S, XLEN>("sra"  , 0b101, 0b0100000, [](S a, S b) { assert(b > -1); return a >> b; }),
-            alu_32i_r_inst<S, XLEN>("or"   , 0b110, 0b0000000, [](S a, S b) { return static_cast<U>(a) | static_cast<U>(b); }),
-            alu_32i_r_inst<S, XLEN>("and"  , 0b111, 0b0000000, [](S a, S b) { return static_cast<U>(a) & static_cast<U>(b); }),
+            alu_32i_r_inst<S, XLEN>("add"   , 0b000, 0b0000000, [](S a, S b) { return a + b; }),
+            alu_32i_r_inst<S, XLEN>("sub"   , 0b000, 0b0100000, [](S a, S b) { return a - b; }),
+            alu_32i_r_inst<S, XLEN>("sll"   , 0b001, 0b0000000, [](S a, S b) { assert(b > -1); return static_cast<U>(a) << b; }),
+            alu_32i_r_inst<S, XLEN>("slt"   , 0b010, 0b0000000, [](S a, S b) { return a < b ? 0x1 : 0x0; }),
+            alu_32i_r_inst<S, XLEN>("sltu"  , 0b011, 0b0000000, [](S a, S b) { return static_cast<U>(a) < static_cast<U>(b) ? 0x1 : 0x0; }),
+            alu_32i_r_inst<S, XLEN>("xor"   , 0b100, 0b0000000, [](S a, S b) { return static_cast<U>(a) ^ static_cast<U>(b); }),
+            alu_32i_r_inst<S, XLEN>("srl"   , 0b101, 0b0000000, [](S a, S b) { assert(b > -1); return static_cast<U>(a) >> b; }),
+            alu_32i_r_inst<S, XLEN>("sra"   , 0b101, 0b0100000, [](S a, S b) { assert(b > -1); return a >> b; }),
+            alu_32i_r_inst<S, XLEN>("or"    , 0b110, 0b0000000, [](S a, S b) { return static_cast<U>(a) | static_cast<U>(b); }),
+            alu_32i_r_inst<S, XLEN>("and"   , 0b111, 0b0000000, [](S a, S b) { return static_cast<U>(a) & static_cast<U>(b); }),
             // I-type
-            // imm[11:5] == 0b0000000 or 0b0100000のとき
-            alu_32i_i_inst<S, XLEN>("slli"  , 0b000, [](S a, S imm) { assert((imm & 0xfe0) == 0x000); assert(imm > -1); return static_cast<U>(a) << (imm & 0x1f); }), // shamt==imm[24:20]
-            alu_32i_i_inst<S, XLEN>("srli"  , 0b001, [](S a, S imm) { assert((imm & 0xfe0) == 0x000); assert(imm > -1); return static_cast<U>(a) >> (imm & 0x1f); }), // shamt==imm[24:20]
-            alu_32i_i_inst<S, XLEN>("srai"  , 0b010, [](S a, S imm) { assert((imm & 0xfe0) == 0x400); assert(imm > -1); return a >> (imm & 0x1f); }), // shamt==imm[24:20]
-            // I-type
-            alu_32i_i_inst<S, XLEN>("addi"  , 0b000, [](S a, S imm) { return a + imm; }),
-            alu_32i_i_inst<S, XLEN>("slti"  , 0b001, [](S a, S imm) { return a < imm ? 0x1 : 0x0; }),
-            alu_32i_i_inst<S, XLEN>("sltiu" , 0b010, [](S a, S imm) { return static_cast<U>(a) < static_cast<U>(imm) ? 0x1 : 0x0; }),
-            alu_32i_i_inst<S, XLEN>("xori"  , 0b011, [](S a, S imm) { return a ^ imm; }),
-            alu_32i_i_inst<S, XLEN>("ori"   , 0b100, [](S a, S imm) { return a | imm; }),
-            alu_32i_i_inst<S, XLEN>("andi"  , 0b101, [](S a, S imm) { return a + imm; }),
+            alu_32i_i_inst<S, XLEN>("slli"  , 0b001, 0b0000000, [](S a, S imm) { assert((imm & 0xfe0) == 0x000); assert(imm > -1); return static_cast<U>(a) << (imm & 0x1f); }), // shamt==imm[24:20]
+            alu_32i_i_inst<S, XLEN>("srli"  , 0b101, 0b0000000, [](S a, S imm) { assert((imm & 0xfe0) == 0x000); assert(imm > -1); return static_cast<U>(a) >> (imm & 0x1f); }), // shamt==imm[24:20]
+            alu_32i_i_inst<S, XLEN>("srai"  , 0b101, 0b0100000, [](S a, S imm) { assert((imm & 0xfe0) == 0x400); assert(imm > -1); return a >> (imm & 0x1f); }), // shamt==imm[24:20]
+            alu_32i_i_inst<S, XLEN>("addi"  , 0b000, 0b0000000, [](S a, S imm) { return a + imm; }),
+            alu_32i_i_inst<S, XLEN>("slti"  , 0b010, 0b0000000, [](S a, S imm) { return a < imm ? 0x1 : 0x0; }),
+            alu_32i_i_inst<S, XLEN>("sltiu" , 0b011, 0b0000000, [](S a, S imm) { return static_cast<U>(a) < static_cast<U>(imm) ? 0x1 : 0x0; }),
+            alu_32i_i_inst<S, XLEN>("xori"  , 0b100, 0b0000000, [](S a, S imm) { return a ^ imm; }),
+            alu_32i_i_inst<S, XLEN>("ori"   , 0b110, 0b0000000, [](S a, S imm) { return a | imm; }),
+            alu_32i_i_inst<S, XLEN>("andi"  , 0b111, 0b0000000, [](S a, S imm) { return a + imm; }),
             // Branch
-            alu_32i_i_inst<S, XLEN>("beq"   , 0b000, [](S a, S b) { return a == b; }),
-            alu_32i_i_inst<S, XLEN>("bne"   , 0b001, [](S a, S b) { return a != b; }),
-            alu_32i_i_inst<S, XLEN>("blt"   , 0b100, [](S a, S b) { return a <  b; }),
-            alu_32i_i_inst<S, XLEN>("bge"   , 0b101, [](S a, S b) { return a >  b; }),
-            alu_32i_i_inst<S, XLEN>("bltu"  , 0b110, [](S a, S b) { return static_cast<U>(a) <   static_cast<U>(b); }),
-            alu_32i_i_inst<S, XLEN>("bgeu"  , 0b111, [](S a, S b) { return static_cast<U>(a) >=  static_cast<U>(b); }),
+            alu_32i_b_inst<S, XLEN>("beq"   , 0b000, [](S a, S b) { return a == b; }),
+            alu_32i_b_inst<S, XLEN>("bne"   , 0b001, [](S a, S b) { return a != b; }),
+            alu_32i_b_inst<S, XLEN>("blt"   , 0b100, [](S a, S b) { return a <  b; }),
+            alu_32i_b_inst<S, XLEN>("bge"   , 0b101, [](S a, S b) { return a >  b; }),
+            alu_32i_b_inst<S, XLEN>("bltu"  , 0b110, [](S a, S b) { return static_cast<U>(a) <   static_cast<U>(b); }),
+            alu_32i_b_inst<S, XLEN>("bgeu"  , 0b111, [](S a, S b) { return static_cast<U>(a) >=  static_cast<U>(b); }),
 
             // Jump
             Inst<S, XLEN>(

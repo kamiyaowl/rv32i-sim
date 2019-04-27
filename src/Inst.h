@@ -10,7 +10,7 @@ using namespace std;
 namespace sim {
     // 現在はrv32iのみ対応
     enum ImmType: char {
-        None = '!', R='R', I='I', S='S', U='U',
+        None = '!', R='R', I='I', S='S', B='B', U='U', J='J',
     };
     struct Args {
         uint8_t opcode;

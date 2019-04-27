@@ -4,7 +4,7 @@
 
 #include "Inst.h"
 #include "Reg.h"
-#include "RV32I.h"
+#include "Alu.h"
 
 int main(void) {
     return 0;

@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "typeinfo": "cpp",
-        "functional": "cpp"
+        "functional": "cpp",
+        "tuple": "cpp"
     }
 }

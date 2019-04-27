@@ -1,5 +1,4 @@
 #include <vector>
-#include <tuple>
 #include <string>
 #pragma once
 
@@ -36,9 +35,6 @@ namespace sim {
 
                 if(addr == 0) return 0x0; // x0/zero
                 else return x[addr];
-            }
-            tuple<T,T> read(uint8_t addr1, uint8_t addr2) {
-                return make_tuple(this->read(addr1), this->read(addr2));
             }
             void write(uint8_t addr, T data) {
                 assert(0 < addr);

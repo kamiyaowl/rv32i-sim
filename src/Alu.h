@@ -40,6 +40,24 @@ namespace sim {
             }
         );
     }
+    // Store
+    template<typename DATA, typename ADDR>
+    inline Inst<DATA, ADDR> alu_32i_s_inst(string name, uint8_t funct3, function<DATA(DATA)> p) {
+        return Inst<DATA, ADDR>(
+            name,
+            0b0100011,
+            funct3,
+            0x0, // invalid
+            ImmType::S,
+            [&](Reg<DATA, ADDR>& reg, Mem<DATA, ADDR>& mem, const Args args) {
+                ADDR addr = reg.read(args.rs1) + args.imm;
+                auto data = p(reg.read(args.rs2));
+
+                mem.write(addr, data);
+                reg.incr_pc();
+            }
+        );
+    }
     // Load
     template<typename DATA, typename ADDR>
     inline Inst<DATA, ADDR> alu_32i_l_inst(string name, uint8_t funct3, function<DATA(DATA)> p) {
@@ -107,7 +125,9 @@ namespace sim {
             alu_32i_i_inst<S, ADDR>("ori"   , 0b110, 0b0000000, [](S a, S imm) { return static_cast<U>(a) | static_cast<U>(imm); }),
             alu_32i_i_inst<S, ADDR>("andi"  , 0b111, 0b0000000, [](S a, S imm) { return static_cast<U>(a) & static_cast<U>(imm); }),
             // Store
-            // TODO:
+            alu_32i_s_inst<S, ADDR>("sb"  , 0b000, [](S a) { return static_cast<S>(static_cast<U>(a) & 0xff); }),
+            alu_32i_s_inst<S, ADDR>("sh"  , 0b001, [](S a) { return static_cast<S>(static_cast<U>(a) & 0xffff); }),
+            alu_32i_s_inst<S, ADDR>("sw"  , 0b010, [](S a) { return static_cast<S>(static_cast<U>(a) & 0xffffffff); }),
 
             // Load
             alu_32i_l_inst<S, ADDR>("lb"  , 0b000, [](S a) { return static_cast<S>(static_cast<int8_t>((static_cast<U>(a) & 0xff))); }), // 1byte符号拡張

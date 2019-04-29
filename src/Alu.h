@@ -277,6 +277,7 @@ namespace sim {
         class Alu {
             protected:
             public:
+            void reset() {}
             void run(Reg<DATA, ADDR>& reg, Mem<DATA, ADDR>& mem, DATA instruction) {
                 uint64_t inst = static_cast<uint64_t>(instruction);
                 // opで検索
@@ -313,7 +314,7 @@ namespace sim {
                 // Done
             }
 
-            
+
         };
     };
 };

@@ -1,7 +1,7 @@
-#include <vector>
-#include <string>
 #pragma once
 
+#include <vector>
+#include <string>
 #include <stdint.h>
 
 using namespace std;
@@ -29,7 +29,10 @@ namespace sim {
         public:
             const size_t XLEN = 32;
             Reg() {
-                x = vector<T>(XLEN);
+                this->reset();
+            }
+            void reset() {
+                x = vector<T>(XLEN, 0x0);
                 pc = 0;
             }
             T read(uint8_t addr) {

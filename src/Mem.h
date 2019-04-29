@@ -45,5 +45,8 @@ namespace sim {
                 mem[addr+2] = (data >> 16) & 0xff;
                 mem[addr+3] = (data >> 24) & 0xff;
             }
+            void reset() {
+                mem.clear();
+            }
     };
 };

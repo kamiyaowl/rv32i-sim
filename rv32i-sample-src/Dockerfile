@@ -10,6 +10,6 @@ RUN apt install -y git
 
 RUN git clone --recursive https://github.com/riscv/riscv-gnu-toolchain
 
-RUN cd riscv-gnu-toolchain && ./configure --prefix=/opt/riscv && make
+RUN cd riscv-gnu-toolchain && ./configure --prefix=/opt/riscv --with-arch=rv32gc --with-abi=ilp32d && make
 
 WORKDIR /work

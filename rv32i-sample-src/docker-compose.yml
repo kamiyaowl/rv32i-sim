@@ -11,7 +11,7 @@ services:
       -mabi=ilp32
       -o /work/hello.s
       /work/hello.c
-  riscv-assembly:
+  riscv-compile:
     build: .
     volumes: 
       - ./:/work

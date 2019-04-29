@@ -1,5 +1,8 @@
 #pragma once
 #include <functional>
+#include <vector>
+#include <algorithm>
+
 #include "Reg.h"
 #include "Inst.h"
 
@@ -196,5 +199,121 @@ namespace sim {
             ),
 
         };
-    }
+        template<typename T>
+        void parseArgs(T inst, ImmType immType, Args& args) {
+            args.opcode = (inst >> 0) & 0x7f;
+            switch(immType) {
+                case ImmType::R:
+                    args.rd     = (inst >>  7) & 0x1f;
+                    args.funct3 = (inst >> 12) & 0x7;
+                    args.rs1    = (inst >> 15) & 0x1f;
+                    args.rs2    = (inst >> 20) & 0x1f;
+                    args.funct7 = (inst >> 25) & 0x7f;
+
+                    args.imm    = 0x0; 
+                    break;
+                case ImmType::I:
+                    args.rd     = (inst >>  7) & 0x1f;
+                    args.funct3 = (inst >> 12) & 0x7;
+                    args.rs1    = (inst >> 15) & 0x1f;
+                    args.imm    = (inst >> 20) & 0x0fff;
+
+                    args.rs2    = 0x0;
+                    args.funct7 = 0x0;
+                    break;
+                case ImmType::S:
+                    args.imm    = 
+                        (((inst >> 25) & 0x7f) << 5) | 
+                        ((inst >> 7) & 0x1f);
+                    args.funct3 = (inst >> 12) & 0x7;
+                    args.rs1    = (inst >> 15) & 0x1f;
+                    args.rs2    = (inst >> 20) & 0x1f;
+
+                    args.rd     = 0x0;
+                    args.funct7 = 0x0; 
+                    break;
+                case ImmType::B:
+                    args.imm    = 
+                        (((inst >> 31) & 0x01) << 12) |
+                        (((inst >>  7) & 0x01) << 11) |
+                        (((inst >> 25) & 0x3f) <<  5) |
+                        (((inst >>  8) & 0x0f) <<  1);
+                    args.funct3 = (inst >> 12) & 0x7;
+                    args.rs1    = (inst >> 15) & 0x1f;
+                    args.rs2    = (inst >> 20) & 0x1f;
+
+                    args.rd     = 0x0;
+                    args.funct7 = 0x0; 
+                    break;
+                case ImmType::U:
+                    args.rd     = (inst >>  7) & 0x1f;
+                    args.imm    = (inst & 0xfffff000); 
+
+                    args.funct3 = 0x0;
+                    args.rs1    = 0x0;
+                    args.rs2    = 0x0;
+                    args.funct7 = 0x0;
+                    break;
+                case ImmType::J:
+                    args.imm    = 
+                        (((inst >> 31) &  0x01) << 20) |
+                        (((inst >> 12) &  0xff) << 12) |
+                        (((inst >> 19) &  0x01) << 11) |
+                        (((inst >> 21) & 0x3ff) << 1);
+                    args.rd     = (inst >>  7) & 0x1f;
+
+                    args.rs1    = 0x0;
+                    args.rs2    = 0x0;
+                    args.funct3 = 0x0;
+                    args.funct7 = 0x0; 
+                    break;
+                default:
+                    assert(false);
+                    break;
+            }
+        }
+
+        template<typename DATA, typename ADDR>
+        class Alu {
+            protected:
+            public:
+            void run(Reg<DATA, ADDR>& reg, Mem<DATA, ADDR>& mem, DATA instruction) {
+                uint64_t inst = static_cast<uint64_t>(instruction);
+                // opで検索
+                uint8_t opcode = (inst >> 0) & 0x7f;
+                vector<Inst<DATA, ADDR>> filter_op;
+                std::copy_if(instructions.begin(), instructions.end(), std::back_inserter(filter_op), [&opcode](const Inst<DATA, ADDR>& i) {
+                    return opcode == i.opcode;
+                });
+                assert(filter_op.size() > 0);
+                // functなしで確定するパターンが有る
+                if (filter_op.size() == 1) {
+                    filter_op[0].run(reg, mem, inst);
+                } else {
+                    // funct3で一致確認
+                    uint8_t funct3 = (inst >> 12) & 0x7;
+                    vector<Inst<DATA, ADDR>> filter_funct3;
+                    std::copy_if(filter_op.begin(), filter_op.end(), std::back_inserter(filter_funct3), [&funct3](const Inst<DATA, ADDR>& i) {
+                        return funct3 == i.funct3;
+                    });
+                    assert(filter_funct3.size() > 0);
+                    if (filter_funct3.size() == 1) {
+                        filter_funct3[0].run(reg, mem, inst);
+                    } else {
+                        // funct7で分類が必要なパターン(add, addi, srli, sraiなど)
+                        uint8_t funct7 = (inst >> 25) & 0x7f;
+                        vector<Inst<DATA, ADDR>> filter_funct7;
+                        std::copy_if(filter_funct3.begin(), filter_funct3.end(), std::back_inserter(filter_funct7), [&funct7](const Inst<DATA, ADDR>& i) {
+                            return funct7 == i.funct7;
+                        });
+                        assert(filter_funct7.size() == 1);
+                        filter_funct7[0].run(reg, mem, inst);
+                    }
+                }
+                // Done
+            }
+
+            
+        };
+    };
 };

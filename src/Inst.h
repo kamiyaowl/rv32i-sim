@@ -4,7 +4,9 @@
 #include <stdint.h>
 #include <functional>
 #include <bitset>
+
 #include "Reg.h"
+#include "Mem.h"
 
 using namespace std;
 namespace sim {
@@ -22,7 +24,7 @@ namespace sim {
         uint32_t imm;
     };
 
-    template<typename T, size_t XLEN>
+    template<typename T>
     void parseArgs(T inst, ImmType immType, Args& args) {
         args.opcode = (inst >> 0) & 0x7f;
         switch(immType) {
@@ -96,10 +98,10 @@ namespace sim {
         }
     }
 
-    template<typename T, size_t XLEN>
-    using Process = void(Reg<T, XLEN>&, const Args&);
+    template<typename DATA, typename ADDR>
+    using Process = void(Reg<DATA>&, Mem<DATA, ADDR>& mem, const Args&);
 
-    template<typename T, size_t XLEN>
+    template<typename DATA, typename ADDR>
     class Inst {
         public:
             string name;
@@ -107,14 +109,14 @@ namespace sim {
             uint8_t funct3;
             uint8_t funct7;
             ImmType immType;
-            function<Process<T, XLEN>> process;
+            function<Process<DATA, ADDR>> process;
 
             Inst() {}
-            Inst(string name, uint8_t opcode, uint8_t funct3, uint8_t funct7, ImmType immType, function<Process<T, XLEN>> process):
+            Inst(string name, uint8_t opcode, uint8_t funct3, uint8_t funct7, ImmType immType, function<Process<DATA, ADDR>> process):
                 name(name), opcode(opcode), funct3(funct3), funct7(funct7), immType(immType), process(process) {
             }
             ~Inst() {}
-            void run(Reg<T, XLEN>& reg, T inst) {
+            void run(Reg<DATA, ADDR>& reg, Mem<DATA, ADDR>& mem, DATA inst) {
                 // TODO: Impl
                 assert(false);
                 

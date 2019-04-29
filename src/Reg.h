@@ -7,7 +7,8 @@
 using namespace std;
 
 namespace sim {
-    template<typename T, size_t XLEN>
+    // Reg(32i用)
+    template<typename T>
     class Reg {
         protected:
             // Calling conversion
@@ -26,6 +27,7 @@ namespace sim {
             vector<T> x;
             T pc;
         public:
+            const size_t XLEN = 32;
             Reg() {
                 x = vector<T>(XLEN);
                 pc = 0;

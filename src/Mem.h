@@ -12,17 +12,17 @@ namespace sim {
         public:
             const ADDR UART_PERIPHERAL_BASE_ADDR = 0x10000000;
             const ADDR UART_PERIPHERAL_SIZE      = 0x00000001;
-            T read_byte(ADDR addr) {
+            DATA read_byte(ADDR addr) {
                 if (mem.count(addr) == 0) {
                     mem[addr] = 0xa5; // 本来ランダム初期化されるので
                 }
                 return mem[addr];
             }
-            T read_half(ADDR addr) {
+            DATA read_half(ADDR addr) {
                 return (read_byte(addr + 1) << 8) | read_byte(addr);
             }
             // read_word
-            T read(ADDR addr) {
+            DATA read(ADDR addr) {
                 return (read_half(addr + 2) <<16) | read_half(addr);
             }
             // write_word

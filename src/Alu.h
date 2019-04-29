@@ -125,18 +125,16 @@ namespace sim {
             alu_32i_i_inst<S, ADDR>("ori"   , 0b110, 0b0000000, [](S a, S imm) { return static_cast<U>(a) | static_cast<U>(imm); }),
             alu_32i_i_inst<S, ADDR>("andi"  , 0b111, 0b0000000, [](S a, S imm) { return static_cast<U>(a) & static_cast<U>(imm); }),
             // Store
-            alu_32i_s_inst<S, ADDR>("sb"  , 0b000, [](S a) { return static_cast<S>(static_cast<U>(a) & 0xff); }),
-            alu_32i_s_inst<S, ADDR>("sh"  , 0b001, [](S a) { return static_cast<S>(static_cast<U>(a) & 0xffff); }),
-            alu_32i_s_inst<S, ADDR>("sw"  , 0b010, [](S a) { return static_cast<S>(static_cast<U>(a) & 0xffffffff); }),
-
+            alu_32i_s_inst<S, ADDR>("sb"    , 0b000, [](S a) { return static_cast<S>(static_cast<U>(a) & 0xff); }),
+            alu_32i_s_inst<S, ADDR>("sh"    , 0b001, [](S a) { return static_cast<S>(static_cast<U>(a) & 0xffff); }),
+            alu_32i_s_inst<S, ADDR>("sw"    , 0b010, [](S a) { return static_cast<S>(static_cast<U>(a) & 0xffffffff); }),
             // Load
-            alu_32i_l_inst<S, ADDR>("lb"  , 0b000, [](S a) { return static_cast<S>(static_cast<int8_t>((static_cast<U>(a) & 0xff))); }), // 1byte符号拡張
-            alu_32i_l_inst<S, ADDR>("lh"  , 0b001, [](S a) { return static_cast<S>(static_cast<int16_t>((static_cast<U>(a) & 0xffff))); }), // 2byte符号拡張
-            alu_32i_l_inst<S, ADDR>("lw"  , 0b010, [](S a) { return static_cast<S>(static_cast<int32_t>((static_cast<U>(a) & 0xffffffff))); }), // 4byte符号拡張
-            alu_32i_l_inst<S, ADDR>("lbu" , 0b100, [](S a) { return static_cast<S>(static_cast<uint16_t>((static_cast<U>(a) & 0xff))); }), // 1byte Zero拡張
-            alu_32i_l_inst<S, ADDR>("lhu" , 0b101, [](S a) { return static_cast<S>(static_cast<uint32_t>((static_cast<U>(a) & 0xffff))); }), // 2byte Zero拡張
-            alu_32i_l_inst<S, ADDR>("lwu" , 0b110, [](S a) { return static_cast<S>(static_cast<uint64_t>((static_cast<U>(a) & 0xffffffffL))); }), // 4byte Zero拡張
-
+            alu_32i_l_inst<S, ADDR>("lb"    , 0b000, [](S a) { return static_cast<S>(static_cast<int8_t>((static_cast<U>(a) & 0xff))); }), // 1byte符号拡張
+            alu_32i_l_inst<S, ADDR>("lh"    , 0b001, [](S a) { return static_cast<S>(static_cast<int16_t>((static_cast<U>(a) & 0xffff))); }), // 2byte符号拡張
+            alu_32i_l_inst<S, ADDR>("lw"    , 0b010, [](S a) { return static_cast<S>(static_cast<int32_t>((static_cast<U>(a) & 0xffffffff))); }), // 4byte符号拡張
+            alu_32i_l_inst<S, ADDR>("lbu"   , 0b100, [](S a) { return static_cast<S>(static_cast<uint16_t>((static_cast<U>(a) & 0xff))); }), // 1byte Zero拡張
+            alu_32i_l_inst<S, ADDR>("lhu"   , 0b101, [](S a) { return static_cast<S>(static_cast<uint32_t>((static_cast<U>(a) & 0xffff))); }), // 2byte Zero拡張
+            alu_32i_l_inst<S, ADDR>("lwu"   , 0b110, [](S a) { return static_cast<S>(static_cast<uint64_t>((static_cast<U>(a) & 0xffffffffL))); }), // 4byte Zero拡張
             // Branch
             alu_32i_b_inst<S, ADDR>("beq"   , 0b000, [](S a, S b) { return a == b; }),
             alu_32i_b_inst<S, ADDR>("bne"   , 0b001, [](S a, S b) { return a != b; }),

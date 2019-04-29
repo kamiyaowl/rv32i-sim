@@ -11,3 +11,15 @@ services:
       -mabi=ilp32
       -o /work/hello.s
       /work/hello.c
+  riscv-assembly:
+    build: .
+    volumes: 
+      - ./:/work
+    command: >
+      riscv64-unknown-elf-gcc
+      -march=rv32i
+      -mabi=ilp32
+      -o /work/hello.o
+      /work/hello.c
+    depends_on: 
+      - riscv-assembly

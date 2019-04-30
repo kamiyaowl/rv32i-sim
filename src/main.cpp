@@ -9,7 +9,7 @@ int main(void) {
     cpu.reset();
 
     // TODO: Impl here
-    cpu.load_program();
+    cpu.load_program("../rv32i-sample.src/hello.o");
 
     cpu.run();
 

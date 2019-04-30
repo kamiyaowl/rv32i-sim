@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "Mem.h"
 #include "Alu.h"
+#include "ElfLoader.h"
 
 namespace sim {
     namespace rv32i {
@@ -19,8 +20,10 @@ namespace sim {
                     reg.reset();
                     alu.reset();
                 }
-                void load_program(){
-                    
+                void load_program(const std::string& elf_path){
+                    elf::load(elf_path, [&](uint32_t addr, uint32_t data){
+                        mem.write(addr, data);
+                    });
                 }
                 void step() {
                     auto pc = reg.read_pc();

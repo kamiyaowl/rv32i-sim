@@ -5,7 +5,7 @@ services:
     volumes: 
       - ./:/work
     command: >
-      riscv64-unknown-elf-gcc
+      riscv32-unknown-elf-gcc
       -S
       -march=rv32i
       -mabi=ilp32
@@ -16,10 +16,23 @@ services:
     volumes: 
       - ./:/work
     command: >
-      riscv64-unknown-elf-gcc
+      riscv32-unknown-elf-gcc
       -march=rv32i
       -mabi=ilp32
       -o /work/hello.o
       /work/hello.c
     depends_on: 
       - riscv-assembly
+  riscv-objdump:
+    build: .
+    volumes: 
+      - ./:/work
+    command: >
+      riscv32-unknown-elf-objdump
+      -x
+      -D
+      -l
+      --prefix-addresses
+      /work/hello.o
+    depends_on: 
+      - riscv-compile

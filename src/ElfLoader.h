@@ -44,19 +44,34 @@ namespace sim {
         } Elf64_Ehdr;
 
         // Thanks: http://blue-9.hatenadiary.com/entry/2017/03/14/212929
+        // Specs:  https://github.com/riscv/riscv-elf-psabi-doc/blob/master/riscv-elf.md
         void load(const std::string& elf_path, std::function<void(uint32_t addr, uint32_t data)> write) {
             std::ifstream ifs(elf_path, ifstream::in | ifstream::binary);
             assert(ifs);
 
             // ELF Headerを読み出す
-            Elf64_Ehdr hdr;
+            Elf64_Ehdr hdr = {};
             ifs.read((char*)(&hdr.e_ident[0]), EI_NIDENT);
+            ifs.read((char*)(&hdr.e_type),      sizeof(hdr.e_type));
+            ifs.read((char*)(&hdr.e_machine),   sizeof(hdr.e_machine));
+            ifs.read((char*)(&hdr.e_version),   sizeof(hdr.e_version));
+            ifs.read((char*)(&hdr.e_entry),     sizeof(hdr.e_entry));
+            ifs.read((char*)(&hdr.e_phoff),     sizeof(hdr.e_phoff));
+            ifs.read((char*)(&hdr.e_shoff),     sizeof(hdr.e_shoff));
+            ifs.read((char*)(&hdr.e_flags),     sizeof(hdr.e_flags));
+            ifs.read((char*)(&hdr.e_ehsize),    sizeof(hdr.e_ehsize));
+            ifs.read((char*)(&hdr.e_phentsize), sizeof(hdr.e_phentsize));
+            ifs.read((char*)(&hdr.e_phnum),     sizeof(hdr.e_phnum));
+            ifs.read((char*)(&hdr.e_shentsize), sizeof(hdr.e_shentsize));
+            ifs.read((char*)(&hdr.e_shnum),     sizeof(hdr.e_shnum));
+            ifs.read((char*)(&hdr.e_shstrndx),  sizeof(hdr.e_shstrndx));
             assert(hdr.e_ident[0] == 0x7f);
             assert(hdr.e_ident[1] == 'E');
             assert(hdr.e_ident[2] == 'L');
             assert(hdr.e_ident[3] == 'F');
-
-
+            assert(hdr.e_type == 2); // ET_EXEC
+            assert(hdr.e_machine == 243); // EM_RISCV (243) for RISC-V ELF files. We only support RISC-V v2 family ISAs, this support is implicit.
+            assert(hdr.e_entry > 0); // 実行可能な場合、エントリポイントの仮想アドレス
             // おわり
             ifs.close();
         }

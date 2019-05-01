@@ -30,6 +30,7 @@ services:
     command: >
       riscv32-unknown-elf-objdump
       -x
+      -D
       -l
       --prefix-addresses
       /work/hello.o

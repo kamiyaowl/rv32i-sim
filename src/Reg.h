@@ -55,5 +55,17 @@ namespace sim {
             void incr_pc() {
                 this->pc += (XLEN / 8);
             }
+            void debug_print() {
+                printf("\n");
+                for(int j = 0 ; j < XLEN / 8 ; ++j) {
+                    printf("[MEM] ");
+                    for(int i = 0 ; i < 8 ; ++i) {
+                        int ptr = i + j * 8;
+                        printf("x[%02d]:%08x ", ptr, this->x[ptr]);
+                    }
+                    printf("\n");
+                }
+                printf("[MEM] pc:%08x\n\n", this->pc);
+            }
     };
 };

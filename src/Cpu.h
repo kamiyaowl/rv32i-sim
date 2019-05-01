@@ -26,12 +26,14 @@ namespace sim {
                     });
                     printf("[CPU] entryAddr:%08x\n", entryAddr);
                     reg.write_pc(entryAddr);
+                    reg.debug_print();
                 }
                 void step() {
                     auto pc = reg.read_pc();
                     auto inst = mem.read(pc);
                     printf("[CPU] pc:%d\tinst:%08x\n", pc, inst);
                     alu.run(reg, mem, inst);
+                    reg.debug_print();
                 }
                 void run(){
                     // TODO: 終了条件決める

@@ -61,7 +61,7 @@ namespace sim {
                     printf("[MEM] ");
                     for(int i = 0 ; i < 8 ; ++i) {
                         int ptr = i + j * 8;
-                        printf("x[%02d]:%08x ", ptr, this->x[ptr]);
+                        printf("x[%2x]:%08x ", ptr, this->x[ptr]);
                     }
                     printf("\n");
                 }

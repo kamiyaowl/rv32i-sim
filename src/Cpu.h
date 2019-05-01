@@ -31,7 +31,7 @@ namespace sim {
                 void step() {
                     auto pc = reg.read_pc();
                     auto inst = mem.read(pc);
-                    printf("[CPU] pc:%d\tinst:%08x\n", pc, inst);
+                    printf("[CPU] pc:%08x\tinst:%08x\n", pc, inst);
                     alu.run(reg, mem, inst);
                     reg.debug_print();
                 }

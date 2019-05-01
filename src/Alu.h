@@ -142,7 +142,7 @@ namespace sim {
             alu_32i_b_inst<S, ADDR>("beq"   , 0b000, [](S a, S b) { return a == b; }),
             alu_32i_b_inst<S, ADDR>("bne"   , 0b001, [](S a, S b) { return a != b; }),
             alu_32i_b_inst<S, ADDR>("blt"   , 0b100, [](S a, S b) { return a <  b; }),
-            alu_32i_b_inst<S, ADDR>("bge"   , 0b101, [](S a, S b) { return a >  b; }),
+            alu_32i_b_inst<S, ADDR>("bge"   , 0b101, [](S a, S b) { return a >=  b; }),
             alu_32i_b_inst<S, ADDR>("bltu"  , 0b110, [](S a, S b) { return static_cast<U>(a) <   static_cast<U>(b); }),
             alu_32i_b_inst<S, ADDR>("bgeu"  , 0b111, [](S a, S b) { return static_cast<U>(a) >=  static_cast<U>(b); }),
             // Jump

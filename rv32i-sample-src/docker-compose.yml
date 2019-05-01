@@ -34,5 +34,5 @@ services:
       -l
       --prefix-addresses
       /work/hello.o
-    depends_on: 
-      - riscv-compile
+    # depends_on: 
+    #   - riscv-compile

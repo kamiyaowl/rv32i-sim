@@ -118,7 +118,7 @@ namespace sim {
             void run(Reg<DATA>& reg, Mem<DATA, ADDR>& mem, DATA inst) {
                 Args args;
                 parseArgs(inst, this->immType, args);
-                printf("\t[DEBUG] [%s] rs1:%08x rs2:%08x rd:%08x imm:%08x\n", name.c_str(), args.rs1, args.rs2, args.rd, args.imm);
+                printf("\t[Inst][%s] rs1:%08x rs2:%08x rd:%08x imm:%08x\n", name.c_str(), args.rs1, args.rs2, args.rd, args.imm);
                 this->process(reg, mem, args);
             }
 

@@ -52,8 +52,11 @@ namespace sim {
             void write_pc(T data) {
                 this->pc = data;
             }
+            void get_pc_offset() {
+                return (XLEN / 8);
+            }
             void incr_pc() {
-                this->pc += (XLEN / 8);
+                this->pc += this->get_pc_offset();
             }
             void debug_print() {
                 printf("\n");

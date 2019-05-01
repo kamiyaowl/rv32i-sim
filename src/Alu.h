@@ -153,7 +153,7 @@ namespace sim {
                 0x0, // invalid
                 ImmType::I,
                 [](Reg<S>& reg, Mem<S, ADDR>& mem, const Args args) {
-                    reg.write(args.rd, reg.read_pc() + 1);
+                    reg.write(args.rd, reg.read_pc() + reg.get_pc_offset());
 
                     auto rs1 = reg.read(args.rs1);
                     auto dst = rs1 + args.imm;
@@ -167,7 +167,7 @@ namespace sim {
                 0x0, // invalid
                 ImmType::J,
                 [](Reg<S>& reg, Mem<S, ADDR>& mem, const Args args) {
-                    reg.write(args.rd, reg.read_pc() + 1);
+                    reg.write(args.rd, reg.read_pc() + reg.get_pc-_offset());
 
                     auto dst = args.imm + reg.read_pc();
                     reg.write_pc(dst);

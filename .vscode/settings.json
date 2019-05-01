@@ -3,6 +3,7 @@
         "typeinfo": "cpp",
         "functional": "cpp",
         "tuple": "cpp",
-        "map": "cpp"
+        "map": "cpp",
+        "ios": "cpp"
     }
 }

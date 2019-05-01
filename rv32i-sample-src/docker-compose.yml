@@ -28,11 +28,8 @@ services:
     volumes: 
       - ./:/work
     command: >
-      riscv32-unknown-elf-objdump
-      -x
-      -D
-      -l
-      --prefix-addresses
+      riscv32-unknown-elf-readelf
+      -h
       /work/hello.o
     depends_on: 
       - riscv-compile

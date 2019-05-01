@@ -26,23 +26,23 @@ typedef int64_t	    Elf64_Sxword;
 using namespace std;
 namespace sim {
     namespace elf {
-        typedef struct elf64_hdr {
-            unsigned char e_ident[EI_NIDENT];     /* ELF "magic number" */
-            Elf64_Half e_type;
-            Elf64_Half e_machine;
-            Elf64_Word e_version;
-            Elf64_Addr e_entry;           /* Entry point virtual address */
-            Elf64_Off e_phoff;            /* Program header table file offset */
-            Elf64_Off e_shoff;            /* Section header table file offset */
-            Elf64_Word e_flags;
-            Elf64_Half e_ehsize;
-            Elf64_Half e_phentsize;
-            Elf64_Half e_phnum;
-            Elf64_Half e_shentsize;
-            Elf64_Half e_shnum;
-            Elf64_Half e_shstrndx;
-        } Elf64_Ehdr;
-
+        typedef struct elf32_hdr{
+            unsigned char e_ident[EI_NIDENT];
+            Elf32_Half    e_type;
+            Elf32_Half    e_machine;
+            Elf32_Word    e_version;
+            Elf32_Addr    e_entry;  /* Entry point */
+            Elf32_Off e_phoff;
+            Elf32_Off e_shoff;
+            Elf32_Word    e_flags;
+            Elf32_Half    e_ehsize;
+            Elf32_Half    e_phentsize;
+            Elf32_Half    e_phnum;
+            Elf32_Half    e_shentsize;
+            Elf32_Half    e_shnum;
+            Elf32_Half    e_shstrndx;
+        } Elf32_Ehdr;
+            
         // Thanks: http://blue-9.hatenadiary.com/entry/2017/03/14/212929
         // Specs:  https://github.com/riscv/riscv-elf-psabi-doc/blob/master/riscv-elf.md
         void load(const std::string& elf_path, std::function<void(uint32_t addr, uint32_t data)> write) {
@@ -50,11 +50,12 @@ namespace sim {
             assert(ifs);
 
             // ELF Headerを読み出す
-            Elf64_Ehdr hdr = {};
+            Elf32_Ehdr hdr = {};
             ifs.read((char*)(&hdr.e_ident[0]), EI_NIDENT);
             ifs.read((char*)(&hdr.e_type),      sizeof(hdr.e_type));
             ifs.read((char*)(&hdr.e_machine),   sizeof(hdr.e_machine));
             ifs.read((char*)(&hdr.e_version),   sizeof(hdr.e_version));
+
             ifs.read((char*)(&hdr.e_entry),     sizeof(hdr.e_entry));
             ifs.read((char*)(&hdr.e_phoff),     sizeof(hdr.e_phoff));
             ifs.read((char*)(&hdr.e_shoff),     sizeof(hdr.e_shoff));
@@ -71,7 +72,11 @@ namespace sim {
             assert(hdr.e_ident[3] == 'F');
             assert(hdr.e_type == 2); // ET_EXEC
             assert(hdr.e_machine == 243); // EM_RISCV (243) for RISC-V ELF files. We only support RISC-V v2 family ISAs, this support is implicit.
-            assert(hdr.e_entry > 0); // 実行可能な場合、エントリポイントの仮想アドレス
+            assert(hdr.e_entry > 0); // 実行可能な場合、エントリポイントの仮想アドレス。今回は実行ファイルのみサポート
+            
+            // TODO:ph Program Headerのp_type=1(LOAD)をメモリ上に展開
+            
+
             // おわり
             ifs.close();
         }

@@ -52,7 +52,7 @@ namespace sim {
             void write_pc(T data) {
                 this->pc = data;
             }
-            void get_pc_offset() {
+            T get_pc_offset() {
                 return (XLEN / 8);
             }
             void incr_pc() {

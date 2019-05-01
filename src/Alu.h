@@ -9,7 +9,7 @@
 namespace sim {
     // Register-OP
     template<typename DATA, typename ADDR>
-    inline Inst<DATA, ADDR> alu_32i_r_inst(string name, uint8_t funct3, uint8_t funct7, function<DATA(DATA, ADDR)> p) {
+    inline Inst<DATA, ADDR> alu_32i_r_inst(string name, uint8_t funct3, uint8_t funct7, function<DATA(DATA, DATA)> p) {
         return Inst<DATA, ADDR>(
             name,
             0b0110011,
@@ -17,9 +17,9 @@ namespace sim {
             funct7,
             ImmType::R,
             [&](Reg<DATA>& reg, Mem<DATA, ADDR>& mem, const Args args) {
-                auto r1 = reg.read(args.rs1);
-                auto r2 = reg.read(args.rs2);
-                auto dst = p(r1, r2);
+                DATA r1 = reg.read(args.rs1);
+                DATA r2 = reg.read(args.rs2);
+                DATA dst = p(r1, r2);
                 reg.write(args.rd, dst);
                 reg.incr_pc();
             }
@@ -27,7 +27,7 @@ namespace sim {
     }
     // Immediate-OP
     template<typename DATA, typename ADDR>
-    inline Inst<DATA, ADDR> alu_32i_i_inst(string name, uint8_t funct3, uint8_t funct7, function<DATA(DATA, ADDR)> p) {
+    inline Inst<DATA, ADDR> alu_32i_i_inst(string name, uint8_t funct3, uint8_t funct7, function<DATA(DATA, DATA)> p) {
         return Inst<DATA, ADDR>(
             name,
             0b0010011,
@@ -35,9 +35,9 @@ namespace sim {
             funct7, // invalid(srai, srliの見分けるためだけに必要、通常は0x0)
             ImmType::I,
             [&](Reg<DATA>& reg, Mem<DATA, ADDR>& mem, const Args args) {
-                auto r1 = reg.read(args.rs1);
-                auto imm = args.imm;
-                auto dst = p(r1, imm);
+                DATA r1 = reg.read(args.rs1);
+                DATA imm = args.imm_signed;
+                DATA dst = p(r1, imm);
                 reg.write(args.rd, dst);
                 reg.incr_pc();
             }
@@ -53,8 +53,8 @@ namespace sim {
             0x0, // invalid
             ImmType::S,
             [&](Reg<DATA>& reg, Mem<DATA, ADDR>& mem, const Args args) {
-                ADDR addr = reg.read(args.rs1) + args.imm;
-                auto data = p(reg.read(args.rs2));
+                ADDR addr = reg.read(args.rs1) + args.imm_signed;
+                DATA data = p(reg.read(args.rs2));
 
                 mem.write(addr, data);
                 reg.incr_pc();
@@ -71,10 +71,10 @@ namespace sim {
             0x0, // invalid
             ImmType::I,
             [&](Reg<DATA>& reg, Mem<DATA, ADDR>& mem, const Args args) {
-                ADDR addr = reg.read(args.rs1) + args.imm;
-                auto data = mem.read(addr);
+                ADDR addr = reg.read(args.rs1) + args.imm_signed;
+                DATA data = mem.read(addr);
 
-                auto dst = p(data);
+                DATA dst = p(data);
                 reg.write(args.rd, dst);
                 reg.incr_pc();
             }
@@ -89,10 +89,10 @@ namespace sim {
             0x0, // invalid
             ImmType::B,
             [&](Reg<DATA>& reg, Mem<DATA, ADDR>& mem, const Args args) {
-                auto r1 = reg.read(args.rs1);
-                auto r2 = reg.read(args.rs2);
+                DATA r1 = reg.read(args.rs1);
+                DATA r2 = reg.read(args.rs2);
                 if (cond(r1, r2)) {
-                    auto dst = reg.read_pc() + args.imm;
+                    DATA dst = reg.read_pc() + args.imm_signed;
                     reg.write_pc(dst);
                 } else {
                     reg.incr_pc();
@@ -155,8 +155,8 @@ namespace sim {
                 [](Reg<S>& reg, Mem<S, ADDR>& mem, const Args args) {
                     reg.write(args.rd, reg.read_pc() + reg.get_pc_offset());
 
-                    auto rs1 = reg.read(args.rs1);
-                    auto dst = rs1 + args.imm;
+                    S rs1 = reg.read(args.rs1);
+                    S dst = rs1 + args.imm_signed;
                     reg.write_pc(dst);
                 }
             ),
@@ -167,9 +167,9 @@ namespace sim {
                 0x0, // invalid
                 ImmType::J,
                 [](Reg<S>& reg, Mem<S, ADDR>& mem, const Args args) {
-                    reg.write(args.rd, reg.read_pc() + reg.get_pc-_offset());
+                    reg.write(args.rd, reg.read_pc() + reg.get_pc_offset());
 
-                    auto dst = args.imm + reg.read_pc();
+                    S dst = args.imm_signed + reg.read_pc();
                     reg.write_pc(dst);
                 }
             ),
@@ -181,7 +181,7 @@ namespace sim {
                 0x0, // invalid
                 ImmType::U,
                 [](Reg<S>& reg, Mem<S, ADDR>& mem, const Args args) {
-                    auto dst = args.imm + reg.read_pc();
+                    S dst = args.imm_signed + reg.read_pc();
                     reg.write(args.rd, dst);
                     reg.incr_pc();
                 }
@@ -193,7 +193,7 @@ namespace sim {
                 0x0, // invalid
                 ImmType::U,
                 [](Reg<S>& reg, Mem<S, ADDR>& mem, const Args args) {
-                    reg.write(args.rd, args.imm);
+                    reg.write(args.rd, args.imm_raw);
                     reg.incr_pc();
                 }
             ),

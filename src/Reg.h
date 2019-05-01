@@ -53,7 +53,7 @@ namespace sim {
                 this->pc = data;
             }
             void incr_pc() {
-                this->pc++;
+                this->pc += (XLEN / 8);
             }
     };
 };

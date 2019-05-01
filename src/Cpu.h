@@ -21,14 +21,16 @@ namespace sim {
                     alu.reset();
                 }
                 void load_program(const std::string& elf_path){
-                    elf::load(elf_path, [&](uint32_t addr, uint32_t data){
-                        mem.write(addr, data);
+                    uint32_t entryAddr = elf::load32(elf_path, [&](uint32_t addr, uint8_t data){
+                        mem.write_byte(addr, data);
                     });
+                    printf("[CPU] entryAddr:%08x\n", entryAddr);
+                    reg.write_pc(entryAddr);
                 }
                 void step() {
                     auto pc = reg.read_pc();
                     auto inst = mem.read(pc);
-                    printf("[DEBUG] pc:%d\tinst:%08x\n", pc, inst);
+                    printf("[CPU] pc:%d\tinst:%08x\n", pc, inst);
                     alu.run(reg, mem, inst);
                 }
                 void run(){

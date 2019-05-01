@@ -42,7 +42,7 @@ namespace sim {
                 else return x[addr];
             }
             void write(uint8_t addr, T data) {
-                assert(0 < addr);
+                assert(0 <= addr);
                 assert(addr < XLEN);
                 x[addr] = data;
             }

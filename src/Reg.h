@@ -4,6 +4,8 @@
 #include <string>
 #include <stdint.h>
 
+#include "Logger.h"
+
 using namespace std;
 
 namespace sim {
@@ -59,6 +61,8 @@ namespace sim {
                 this->pc += this->get_pc_offset();
             }
             void debug_print() {
+                if (sim::log::print_level > sim::log::Level::Debug) return;
+
                 printf("\n");
                 for(int j = 0 ; j < XLEN / 8 ; ++j) {
                     printf("[MEM] ");

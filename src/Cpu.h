@@ -1,8 +1,9 @@
 #pragma once
-#include <stdio.h>
 #include "Mem.h"
 #include "Alu.h"
 #include "ElfLoader.h"
+
+#include "Logger.h"
 
 namespace sim {
     namespace rv32i {
@@ -24,14 +25,14 @@ namespace sim {
                     uint32_t entryAddr = elf::load32(elf_path, [&](uint32_t addr, uint8_t data){
                         mem.write_byte(addr, data);
                     });
-                    printf("[CPU] entryAddr:%08x\n", entryAddr);
+                    sim::log::info("[CPU] entryAddr:%08x\n", entryAddr);
                     reg.write_pc(entryAddr);
                     reg.debug_print();
                 }
                 void step() {
                     auto pc = reg.read_pc();
                     auto inst = mem.read(pc);
-                    printf("[CPU] pc:%08x\tinst:%08x\n", pc, inst);
+                    sim::log::debug("[CPU] pc:%08x\tinst:%08x\n", pc, inst);
                     alu.run(reg, mem, inst);
                     reg.debug_print();
                 }

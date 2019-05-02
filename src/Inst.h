@@ -1,6 +1,5 @@
 #pragma once
 
-#include <stdio.h>
 #include <string>
 #include <stdint.h>
 #include <functional>
@@ -8,6 +7,8 @@
 
 #include "Reg.h"
 #include "Mem.h"
+
+#include "Logger.h"
 
 using namespace std;
 namespace sim {
@@ -136,7 +137,7 @@ namespace sim {
             void run(Reg<DATA>& reg, Mem<DATA, ADDR>& mem, DATA inst) {
                 Args args;
                 parse_args(inst, this->immType, args);
-                printf("\t[Inst][%s] rs1:%08x rs2:%08x rd:%08x imm:%08x(%d)\n", name.c_str(), args.rs1, args.rs2, args.rd, args.imm_raw, args.imm_signed);
+                sim::log::debug("\t[Inst][%s] rs1:%08x rs2:%08x rd:%08x imm:%08x(%d)\n", name.c_str(), args.rs1, args.rs2, args.rd, args.imm_raw, args.imm_signed);
                 this->process(reg, mem, args);
             }
 

@@ -4,7 +4,8 @@
 #include <string>
 #include <functional>
 #include <fstream>
-#include <stdio.h>
+
+#include "Logger.h"
 
 // elf.hから一部引用
 typedef uint32_t	Elf32_Addr;
@@ -112,7 +113,7 @@ namespace sim {
                 ifs.read((char*)(&phdr.p_align),  sizeof(phdr.p_align));
                 // とりあえず PT_LOAD(1)だけ考えとく
                 if (phdr.p_type == 1) {
-                    printf("[ElfLoader][LOAD] off:%08x vaddr:%08x paddr:%08x\n", phdr.p_offset, phdr.p_vaddr, phdr.p_paddr);
+                    sim::log::info("[ElfLoader][LOAD] off:%08x vaddr:%08x paddr:%08x\n", phdr.p_offset, phdr.p_vaddr, phdr.p_paddr);
                     // p_offset : セグメント先頭へのファイル先頭からのオフセット
                     // p_vaddr  : メモリ上の仮想アドレス
                     // p_paddr  : 物理アドレスとして予約されている→使わない

@@ -1,6 +1,8 @@
 #pragma once
+
 #include <map>
-#include <stdio.h>
+
+#include "Logger.h"
 
 namespace sim {
     // DATA: 格納データ型, uint32_tとか
@@ -15,7 +17,7 @@ namespace sim {
             const ADDR UART_PERIPHERAL_SIZE      = 0x00000001;
             DATA read_byte(ADDR addr) {
                 if (mem.count(addr) == 0) {
-                    printf("[WARN][MEM] uninitialized mem access at %08x\n", addr);
+                    sim::log::warn("[MEM] uninitialized mem access at %08x\n", addr);
                     mem[addr] = 0xa5; // 本来ランダム初期化されるので
                 }
                 return mem[addr];
@@ -26,7 +28,7 @@ namespace sim {
             // read_word
             DATA read(ADDR addr) {
                 auto dst = (read_half(addr + 2) <<16) | read_half(addr);
-                printf("[MEM] mem[%08x] = %08x\n", addr, dst);
+                sim::log::debug("[MEM] mem[%08x] = %08x\n", addr, dst);
                 return dst;
             }
             // write_word
@@ -36,7 +38,7 @@ namespace sim {
                 if (this->UART_PERIPHERAL_BASE_ADDR <= addr && 
                     (addr < this->UART_PERIPHERAL_BASE_ADDR + this->UART_PERIPHERAL_SIZE)) {
                     // baseaddr + 0: uart_tx Queueがめっちゃあって即時送信とかにしとく
-                    printf("%c", static_cast<char>(mem[addr]));
+                    sim::log::uart(static_cast<char>(mem[addr]));
                 }
             }
             void write_half(ADDR addr, DATA data) {

@@ -36,18 +36,18 @@ namespace sim {
                 if (this->UART_PERIPHERAL_BASE_ADDR <= addr && 
                     (addr < this->UART_PERIPHERAL_BASE_ADDR + this->UART_PERIPHERAL_SIZE)) {
                     // baseaddr + 0: uart_tx Queueがめっちゃあって即時送信とかにしとく
-                    putchar(static_cast<char>(mem[addr]));
+                    printf("%c", static_cast<char>(mem[addr]));
                 }
             }
             void write_half(ADDR addr, DATA data) {
-                mem[addr] = data & 0xff;
-                mem[addr+1] = (data >> 8) & 0xff;
+                write_byte(addr + 0, (data >>  0) & 0xff);
+                write_byte(addr + 1, (data >>  8) & 0xff);
             }
             void write(ADDR addr, DATA data) {
-                mem[addr] = data & 0xff;
-                mem[addr+1] = (data >>  8) & 0xff;
-                mem[addr+2] = (data >> 16) & 0xff;
-                mem[addr+3] = (data >> 24) & 0xff;
+                write_byte(addr + 0, (data >>  0) & 0xff);
+                write_byte(addr + 1, (data >>  8) & 0xff);
+                write_byte(addr + 2, (data >> 16) & 0xff);
+                write_byte(addr + 3, (data >> 24) & 0xff);
             }
             void reset() {
                 mem.clear();

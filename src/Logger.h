@@ -46,7 +46,7 @@ namespace sim {
             print(format, args ...);
         }
         void uart(char c) {
-            printf("[UART] %c", c);
+            printf("\x1b[43m%c\x1b[49m", c);
             uart_tx_log.push_back(c);
         }
         void uart_log_print() {

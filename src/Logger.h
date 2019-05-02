@@ -9,16 +9,19 @@ namespace sim {
             Debug = 0, 
             Info = 1, 
             Warn = 2,
-            Error = 5, 
             Uart = 100,
+            System = 200,
+            Error = 300, 
         };
         // 出力レベルの設定
-        Level print_level = Level::Info;
+        Level print_level = Level::Uart;
         // Uart出力は持っておく
         std::vector<char> uart_tx_log;
 
         template <typename ... T>
         void print(const char *format, T const & ... args) {
+            // まぁでるよね...
+            // warning: format string is not a string literal (potentially insecure) [-Wformat-security]
             printf(format, args ...);
         }
         template <typename ... T>
@@ -43,6 +46,12 @@ namespace sim {
         void error(const char *format, T const & ... args) {
             if (print_level > Level::Error) return;
             printf("[ERROR]");
+            print(format, args ...);
+        }
+        template <typename ... T>
+        void system(const char *format, T const & ... args) {
+            if (print_level > Level::System) return;
+            printf("[SYSTEM]");
             print(format, args ...);
         }
         void uart(char c) {

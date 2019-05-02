@@ -6,6 +6,8 @@
 #include "Reg.h"
 #include "Inst.h"
 
+#include "Logger.h"
+
 namespace sim {
     // Register-OP
     template<typename DATA, typename ADDR>
@@ -205,7 +207,8 @@ namespace sim {
             protected:
             public:
             void reset() {}
-            void run(Reg<DATA>& reg, Mem<DATA, ADDR>& mem, DATA instruction) {
+            // 本当はいきなりALUがやるものでもない(i以外の命令セットはALUが処理しないのでDecoder.hがいるのが正確っぽい)
+            bool run(Reg<DATA>& reg, Mem<DATA, ADDR>& mem, DATA instruction) {
                 uint64_t inst = static_cast<uint64_t>(instruction);
                 // opで検索
                 uint8_t opcode = (inst >> 0) & 0x7f;
@@ -213,10 +216,15 @@ namespace sim {
                 std::copy_if(instructions.begin(), instructions.end(), std::back_inserter(filter_op), [&opcode](const Inst<DATA, ADDR>& i) {
                     return opcode == i.opcode;
                 });
-                assert(filter_op.size() > 0);
+                // 命令が見つけられなかった場合
+                if(filter_op.size() == 0) {
+                    sim::log::error("[ALU] OP not found.(search operand)\n");
+                    return false;
+                }
                 // functなしで確定するパターンが有る
                 if (filter_op.size() == 1) {
                     filter_op[0].run(reg, mem, inst);
+                    return true;
                 } else {
                     // funct3で一致確認
                     uint8_t funct3 = (inst >> 12) & 0x7;
@@ -224,9 +232,13 @@ namespace sim {
                     std::copy_if(filter_op.begin(), filter_op.end(), std::back_inserter(filter_funct3), [&funct3](const Inst<DATA, ADDR>& i) {
                         return funct3 == i.funct3;
                     });
-                    assert(filter_funct3.size() > 0);
+                    if(filter_funct3.size() == 0) {
+                        sim::log::error("[ALU] OP not found.(search funct3)\n");
+                        return false;
+                    }
                     if (filter_funct3.size() == 1) {
                         filter_funct3[0].run(reg, mem, inst);
+                        return true;
                     } else {
                         // funct7で分類が必要なパターン(add, addi, srli, sraiなど)
                         uint8_t funct7 = (inst >> 25) & 0x7f;
@@ -234,8 +246,15 @@ namespace sim {
                         std::copy_if(filter_funct3.begin(), filter_funct3.end(), std::back_inserter(filter_funct7), [&funct7](const Inst<DATA, ADDR>& i) {
                             return funct7 == i.funct7;
                         });
-                        assert(filter_funct7.size() == 1);
+                        if(filter_funct7.size() == 0) {
+                            sim::log::error("[ALU] OP not found.(search funct7)\n");
+                            return false;
+                        } else if (filter_funct7.size() > 1) {
+                            sim::log::error("[ALU] OP not found.(search funct7 size>1)\n");
+                            return false;
+                        }
                         filter_funct7[0].run(reg, mem, inst);
+                        return true;
                     }
                 }
                 // Done

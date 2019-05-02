@@ -71,6 +71,8 @@ namespace sim {
         // Thanks: http://blue-9.hatenadiary.com/entry/2017/03/14/212929
         // Specs:  https://github.com/riscv/riscv-elf-psabi-doc/blob/master/riscv-elf.md
         uint32_t load32(const std::string& elf_path, std::function<void(uint32_t addr, uint32_t data)> write) {
+            sim::log::system("[ElfLoader][LOAD] file:%s\n", elf_path.c_str());
+
             std::ifstream ifs(elf_path, ifstream::in | ifstream::binary);
             assert(ifs);
 
@@ -99,6 +101,7 @@ namespace sim {
             assert(hdr.e_machine == 243); // EM_RISCV (243) for RISC-V ELF files. We only support RISC-V v2 family ISAs, this support is implicit.
             assert(hdr.e_entry > 0); // 実行可能な場合、エントリポイントの仮想アドレス。今回は実行ファイルのみサポート
             assert(hdr.e_phnum > 0); // Program Headerは存在するはず
+            sim::log::system("[ElfLoader][LOAD] ELF header cheked(ET_EXEC, EM_RISC_V)\n");
             
             // Program Headerをみてメモリ上に展開
             for(int i = 0 ; i < hdr.e_phnum ; ++i) {
@@ -113,7 +116,7 @@ namespace sim {
                 ifs.read((char*)(&phdr.p_align),  sizeof(phdr.p_align));
                 // とりあえず PT_LOAD(1)だけ考えとく
                 if (phdr.p_type == 1) {
-                    sim::log::info("[ElfLoader][LOAD] off:%08x vaddr:%08x paddr:%08x\n", phdr.p_offset, phdr.p_vaddr, phdr.p_paddr);
+                    sim::log::system("[ElfLoader][LOAD] off:%08x vaddr:%08x paddr:%08x\n", phdr.p_offset, phdr.p_vaddr, phdr.p_paddr);
                     // p_offset : セグメント先頭へのファイル先頭からのオフセット
                     // p_vaddr  : メモリ上の仮想アドレス
                     // p_paddr  : 物理アドレスとして予約されている→使わない

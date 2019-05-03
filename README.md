@@ -5,6 +5,10 @@
 アーキテクチャ理解を深めるために、RISC-V 基本整数ISAであるrv32iとELFローダーをC++で実装しています。
 gccでコンパイルした生成物を直接読み込んで実行することができます。
 
+# プレゼン資料
+
+https://kamiyaowl.github.io/presentation/dist/lets-impl-rv32i.html#1
+
 ## 制約(+Known Issue)
 
 * ELFファイルの種類に動的リンクが含まれるものは使用できない
